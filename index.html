@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Workspace</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">W</div>
+        <div>
+          <strong>My Workspace</strong>
+          <span>Projektzentrale</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-view="dashboard"><span>⌂</span> Dashboard</button>
+        <button class="nav-item" data-view="board"><span>▦</span> Aufgaben</button>
+        <button class="nav-item" data-view="projects"><span>□</span> Projekte</button>
+        <button class="nav-item" data-view="notes"><span>✎</span> Notizen</button>
+        <button class="nav-item" data-view="chat"><span>◌</span> Chat</button>
+      </nav>
+
+      <div class="sidebar-section">
+        <div class="section-title">Projekte</div>
+        <div id="projectNav"></div>
+        <button class="add-project" id="addProjectBtn">+ Projekt hinzufügen</button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="nav-item" data-view="settings"><span>⚙</span> Einstellungen</button>
+        <div class="user-mini">
+          <div class="avatar">DU</div>
+          <div>
+            <strong>Admin</strong>
+            <span>Administrator</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <div class="breadcrumb">Workspace / <span id="currentSection">Dashboard</span></div>
+          <h1 id="pageTitle">Guten Tag 👋</h1>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" title="Suche" id="searchBtn">⌕</button>
+          <button class="primary-btn" id="quickAddBtn">+ Neu</button>
+        </div>
+      </header>
+
+      <section class="content">
+        <div id="view-dashboard" class="view active-view">
+          <div class="hero">
+            <div>
+              <span class="eyebrow">ÜBERSICHT</span>
+              <h2>Alles an einem Ort.</h2>
+              <p>Plane Aufgaben, verwalte Projekte und behalte den Fortschritt deines Workspaces im Blick.</p>
+            </div>
+            <button class="primary-btn" id="heroTaskBtn">+ Aufgabe erstellen</button>
+          </div>
+
+          <div class="stats">
+            <div class="stat-card"><span>Offene Aufgaben</span><strong id="statOpen">0</strong><small>noch nicht erledigt</small></div>
+            <div class="stat-card"><span>In Arbeit</span><strong id="statProgress">0</strong><small>aktuell aktiv</small></div>
+            <div class="stat-card"><span>Erledigt</span><strong id="statDone">0</strong><small>abgeschlossen</small></div>
+            <div class="stat-card"><span>Projekte</span><strong id="statProjects">0</strong><small>im Workspace</small></div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="panel">
+              <div class="panel-head"><div><h3>Aktuelle Aufgaben</h3><p>Deine nächsten Schritte</p></div><button class="text-btn" data-go="board">Alle anzeigen →</button></div>
+              <div id="recentTasks" class="task-list"></div>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div><h3>Aktivität</h3><p>Was zuletzt passiert ist</p></div></div>
+              <div id="activityList" class="activity-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="view-board" class="view">
+          <div class="view-head"><div><span class="eyebrow">PLANUNG</span><h2>Aufgaben</h2><p>Ziehe Karten zwischen den Spalten, um den Status zu ändern.</p></div><button class="primary-btn" id="boardAddBtn">+ Aufgabe</button></div>
+          <div class="board" id="board"></div>
+        </div>
+
+        <div id="view-projects" class="view">
+          <div class="view-head"><div><span class="eyebrow">STRUKTUR</span><h2>Projekte</h2><p>Deine Projekte und deren Zugriffskonzept.</p></div><button class="primary-btn" id="projectsAddBtn">+ Projekt</button></div>
+          <div id="projectGrid" class="project-grid"></div>
+        </div>
+
+        <div id="view-notes" class="view">
+          <div class="view-head"><div><span class="eyebrow">WISSEN</span><h2>Notizen</h2><p>Ein einfacher Platz für Ideen und wichtige Informationen.</p></div><button class="primary-btn" id="saveNoteBtn">Speichern</button></div>
+          <div class="note-layout">
+            <div class="panel note-panel">
+              <input id="noteTitle" class="note-title" placeholder="Titel der Notiz">
+              <textarea id="noteBody" class="note-body" placeholder="Schreibe hier deine Notiz..."></textarea>
+            </div>
+            <div class="panel">
+              <div class="panel-head"><div><h3>Gespeicherte Notizen</h3><p>Lokaler Workspace-Speicher</p></div></div>
+              <div id="noteList"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="view-chat" class="view">
+          <div class="view-head"><div><span class="eyebrow">KOMMUNIKATION</span><h2>Chat</h2><p>Lokaler Prototyp für Workspace-Nachrichten.</p></div></div>
+          <div class="chat panel">
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm" class="chat-form"><input id="chatInput" placeholder="Nachricht schreiben..." autocomplete="off"><button class="primary-btn">Senden</button></form>
+          </div>
+        </div>
+
+        <div id="view-settings" class="view">
+          <div class="view-head"><div><span class="eyebrow">WORKSPACE</span><h2>Einstellungen</h2><p>Grundgerüst für spätere Benutzer, Rollen und Berechtigungen.</p></div></div>
+          <div class="settings-grid">
+            <div class="panel">
+              <h3>Benutzer & Rollen</h3>
+              <p class="muted">Aktuell ist der Prototyp lokal. Die echte Anmeldung und Rollenprüfung bauen wir als nächsten Schritt serverseitig ein.</p>
+              <div class="role-row"><div class="avatar">DU</div><div><strong>Admin</strong><span>Vollzugriff · Administrator</span></div><span class="role-pill">Administrator</span></div>
+              <button class="secondary-btn" id="resetBtn">Lokale Demo-Daten zurücksetzen</button>
+            </div>
+            <div class="panel">
+              <h3>Berechtigungskonzept</h3>
+              <div class="permission-list">
+                <div><span>Workspace ansehen</span><b>Administrator</b></div>
+                <div><span>Projekte verwalten</span><b>Administrator</b></div>
+                <div><span>Aufgaben bearbeiten</span><b>Administrator</b></div>
+                <div><span>Benutzer verwalten</span><b>später konfigurierbar</b></div>
+                <div><span>Rollen verwalten</span><b>später konfigurierbar</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop hidden" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-head"><h3 id="modalTitle">Neue Aufgabe</h3><button class="close-btn" id="closeModal">×</button></div>
+      <form id="taskForm">
+        <label>Titel<input id="taskTitle" required maxlength="120" placeholder="z. B. Login-System planen"></label>
+        <label>Beschreibung<textarea id="taskDescription" maxlength="500" placeholder="Kurze Beschreibung..."></textarea></label>
+        <div class="form-row">
+          <label>Priorität<select id="taskPriority"><option value="normal">Normal</option><option value="high">Hoch</option><option value="low">Niedrig</option></select></label>
+          <label>Projekt<select id="taskProject"></select></label>
+        </div>
+        <button class="primary-btn full" type="submit">Aufgabe erstellen</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
